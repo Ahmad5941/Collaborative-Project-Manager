@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Dameosai - Sign In to Code Marketplace">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: ['class', '[data-theme="dark"]'],
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                primary: '#4F46E5', // Indigo-600
+                secondary: '#8B5CF6', // Violet-500
+                accent: '#F59E0B',
+              },
+              luxuryBg: {
+                primary: '#F8FAFC',
+                secondary: '#F1F5F9',
+                card: 'rgba(255, 255, 255, 0.85)',
+                glass: 'rgba(248, 250, 252, 0.85)',
+              },
+              luxuryDarkBg: {
+                primary: '#0B0F19',
+                secondary: '#151D30',
+                card: 'rgba(21, 29, 48, 0.85)',
+                glass: 'rgba(11, 15, 25, 0.85)',
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              heading: ['Outfit', 'sans-serif'],
+              montserrat: ['Montserrat', 'sans-serif']
+            }
+          }
+        }
+      }
+    </script>
+    
+    <!-- Custom Style Sheet for Floating Labels -->
+    <link rel="stylesheet" href="../assets/css/style.css" />
+
+    <!-- Iconify Icons -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.8/iconify-icon.min.js"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+
+    <title>Sign In - Dameosai</title>
+</head>
+<body class="bg-gradient-to-br from-slate-50 to-indigo-50 dark:from-[#0B0F19] dark:to-[#151D30] font-sans transition-colors duration-300">
+    
+    <div class="flex flex-col justify-center items-center min-h-screen px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+
+        <!-- Login Card -->
+        <div class="w-full max-w-md bg-white dark:bg-[#151D30] rounded-xl shadow-lg p-8 relative border border-slate-200/50 dark:border-slate-800/50">
+            
+            <!-- Floating Home Icon -->
+            <a href="../" class="absolute top-6 right-6 text-slate-400 hover:text-indigo-600 dark:hover:text-violet-400 text-xl transition-colors">
+                <span class="iconify" data-icon="solar:home-bold"></span>
+            </a>
+
+            <!-- Logo & Headers -->
+            <div class="text-center">
+                <a href="../" class="font-heading font-extrabold text-2xl tracking-tight text-slate-900 dark:text-white inline-block">
+                    <span class="bg-gradient-to-r from-indigo-600 to-violet-500 text-transparent bg-clip-text">DAMEOSAI</span>
+                </a>
+                <h1 class="text-3xl font-bold text-center mt-4 mb-2 text-slate-900 dark:text-white font-heading">Sign In</h1>
+                <p class="text-center text-slate-500 dark:text-slate-400 mb-6 text-sm font-light">Welcome! Please enter your details.</p>
+            </div>
+
+            <!-- Login Form -->
+            <form id="login-form" novalidate class="space-y-4">
+                
+                <!-- Step 1: Email/Username -->
+                <div class="step" data-step="0">
+                    <div class="form__div">
+                        <input id="login-email" name="username" type="text" class="form__input" placeholder=" " 
+                               required maxlength="100" autocomplete="username">
+                        <label for="login-email" class="form__label">Username or Email</label>
+                    </div>
+                </div>
+
+                <!-- Step 2: Password + Remember me -->
+                <div class="step hidden" data-step="1">
+                    <div class="form__div">
+                        <input id="login-password" name="password" type="password" class="form__input" placeholder=" " 
+                               required minlength="6" autocomplete="current-password">
+                        <label for="login-password" class="form__label">Password</label>
+                        <!-- Password Toggle -->
+                        <span class="password-toggle" id="togglePassword" title="Show/Hide Password">
+                            <iconify-icon icon="mdi:eye-off" class="text-lg" id="eyeIcon"></iconify-icon>
+                        </span>
+                    </div>
+
+                    <!-- Forgot password helper -->
+                    <div class="text-right mb-2">
+                        <a href="forgot-password" class="text-sm text-indigo-600 dark:text-violet-400 font-semibold hover:underline">
+                            Forgot password?
+                        </a>
+                    </div>
+
+                    <div class="flex items-center gap-2 mt-2 text-slate-500 text-sm">
+                        <input id="remember" name="remember" type="checkbox" value="1" 
+                               class="w-4 h-4 rounded cursor-pointer accent-indigo-600 dark:accent-violet-500">
+                        <label for="remember" class="cursor-pointer select-none">Remember me</label>
+                    </div>
+                </div>
+
+                <!-- Navigation buttons -->
+                <div class="flex justify-between gap-3 mt-6">
+                    <button type="button" id="prevBtn" class="btn-secondary w-1/2 hidden">Back</button>
+                    <button type="button" id="nextBtn" class="btn-primary w-full">Next</button>
+                    <button type="submit" id="submitBtn" class="btn-primary w-full hidden">Sign In</button>
+                </div>
+            </form>
+
+            <!-- Redirect Link -->
+            <div class="text-center mt-6 text-xs text-slate-400">
+                Don't have an account? 
+                <a href="register" class="text-indigo-600 dark:text-violet-400 font-semibold hover:underline">Register Here</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container fixed bottom-6 left-6 z-[999] flex flex-col gap-3 max-w-sm pointer-events-none"></div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/auth.js"></script>
+    <script>
+        // Init theme helper
+        function initTheme() {
+            const currentTheme = localStorage.getItem("dameosai_theme") || "light";
+            document.documentElement.setAttribute("data-theme", currentTheme);
+            if (currentTheme === "dark") {
+                document.documentElement.classList.add("dark");
+            } else {
+                document.documentElement.classList.remove("dark");
+            }
+        }
+        initTheme();
+
+        // Multi-step script variables
+        const steps = Array.from(document.querySelectorAll('.step'));
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const usernameInput = document.getElementById('login-email');
+        const passwordInput = document.getElementById('login-password');
+
+        let currentStep = 0;
+
+        function showStep(stepIndex) {
+            currentStep = stepIndex;
+
+            steps.forEach((step, index) => {
+                step.classList.toggle('hidden', index !== stepIndex);
+            });
+
+            prevBtn.classList.toggle('hidden', stepIndex === 0);
+            nextBtn.classList.toggle('hidden', stepIndex !== 0);
+            submitBtn.classList.toggle('hidden', stepIndex !== 1);
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (!usernameInput.value.trim()) {
+                usernameInput.classList.add('error');
+                usernameInput.focus();
+                return;
+            }
+
+            usernameInput.classList.remove('error');
+            showStep(1);
+            passwordInput.focus();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            showStep(0);
+            usernameInput.focus();
+        });
+
+        usernameInput.addEventListener('input', () => {
+            if (usernameInput.value.trim()) {
+                usernameInput.classList.remove('error');
+            }
+        });
+
+        showStep(0);
+
+        // Password visibility toggle
+        const togglePassword = document.getElementById('togglePassword');
+        const eyeIcon = document.getElementById('eyeIcon');
+        
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            if (type === 'password') {
+                eyeIcon.setAttribute('icon', 'mdi:eye-off');
+            } else {
+                eyeIcon.setAttribute('icon', 'mdi:eye');
+            }
+        });
+
+        // Form Submit
+        document.getElementById("login-form").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const email = usernameInput.value.trim();
+            const pass = passwordInput.value;
+
+            // Calls validation script from auth.js
+            const res = handleLogin(email, pass);
+            if (res.success) {
+                showToast("Logged in successfully!", "success");
+                setTimeout(() => {
+                    if (res.user.role === "admin") {
+                        window.location.href = "../admin/dashboard";
+                    } else {
+                        window.location.href = "../index";
+                    }
+                }, 1000);
+            } else {
+                showToast(res.message, "error");
+            }
+        });
+
+        // Toast handler (duplicate from script.js since script.js is not loaded here to prevent conflict)
+        function showToast(message, type = "success") {
+            let container = document.querySelector(".toast-container");
+            if (!container) {
+                container = document.createElement("div");
+                container.className = "toast-container";
+                document.body.appendChild(container);
+            }
+            const toast = document.createElement("div");
+            toast.className = `toast ${type === "error" ? "toast-error" : ""}`;
+            
+            let icon = `<span class="iconify text-lg" data-icon="clarity:success-standard-solid"></span>`;
+            if (type === "error") {
+                icon = `<span class="iconify text-lg" data-icon="bx:bxs-error-circle"></span>`;
+            }
+            
+            toast.innerHTML = `${icon} <span>${message}</span>`;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = "slideInLeft 0.3s ease-in reverse forwards";
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
